@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  nginx:
+    restart: always
+    image: nginx:latest
+    networks:
+      - network-for-ms
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8080:8080"
+  
+networks:
+  network-for-ms:
+    name: network-for-ms
