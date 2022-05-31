@@ -10,6 +10,19 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       - "8080:8080"
+  rabbitmq:
+    image: rabbitmq:3-management
+    networks:
+      - network-for-ms
+    volumes:
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+    ports:
+      - "9000:15672"
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      timeout: 15s
+      retries: 5
   
 networks:
   network-for-ms:
