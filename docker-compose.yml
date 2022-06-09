@@ -69,11 +69,25 @@ services:
     ports:
       - "${CADVISOR_PORT:-8080}:8080"
     restart: always
-
+      
+  rabbitmq:
+    image: rabbitmq:3-management
+    networks:
+      - network-for-ms
+    volumes:
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+    ports:
+      - "9000:15672"
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      timeout: 15s
+      retries: 5
+      
 volumes:
   prometheus_data: {}
   grafana_storage: {}
-
+  
 networks:
   network-for-ms:
     name: network-for-ms
