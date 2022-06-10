@@ -25,6 +25,7 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
     ports:
       - "${PROMETHEUS_PORT:-9090}:9090"
+    restart: always
 
   grafana:
     image: grafana/grafana
@@ -69,7 +70,18 @@ services:
     ports:
       - "${CADVISOR_PORT:-8080}:8080"
     restart: always
-      
+
+  loki:
+    image: grafana/loki:latest
+    networks:
+      - network-for-ms
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki:/etc/loki
+    command: -config.file=/etc/loki/loki.yml
+    restart: always
+
   rabbitmq:
     image: rabbitmq:3-management
     networks:
@@ -79,15 +91,16 @@ services:
     ports:
       - "9000:15672"
     healthcheck:
-      test: [ "CMD", "rabbitmqctl", "status"]
+      test: [ "CMD", "rabbitmqctl", "status" ]
       interval: 5s
       timeout: 15s
       retries: 5
-      
+    restart: always
+
 volumes:
   prometheus_data: {}
   grafana_storage: {}
-  
+
 networks:
   network-for-ms:
     name: network-for-ms
