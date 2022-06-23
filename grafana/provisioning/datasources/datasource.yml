@@ -48,3 +48,10 @@ datasources:
   version: 1
   # <bool> allow users to edit datasources from the UI.
   editable: true
+  
+- name: Jaeger
+  type: jaeger
+  access: proxy
+  url: http://jaeger:16686
+  jsonData:
+    maxLines: 1000
