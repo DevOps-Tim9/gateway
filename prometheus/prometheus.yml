@@ -38,9 +38,19 @@ scrape_configs:
       - targets: ["medias-server:8082"]
     metrics_path: "/api/metrics"
 
+  - job_name: "users-ms"
+    static_configs:
+      - targets: ["users-server:9093"]
+    metrics_path: "/api/metrics"
+
   - job_name: "messages-ms"
     static_configs:
       - targets: ["messages-server:8083"]
+    metrics_path: "/api/metrics"
+
+  - job_name: "notifications-ms"
+    static_configs:
+      - targets: ["notifications-server:9095"]
     metrics_path: "/api/metrics"
 
   - job_name: "cadvisor"
