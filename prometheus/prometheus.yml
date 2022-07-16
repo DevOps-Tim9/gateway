@@ -58,6 +58,11 @@ scrape_configs:
       - targets: ["jobs-server:9099"]
     metrics_path: "/api/metrics"
 
+  - job_name: "events-ms"
+    static_configs:
+      - targets: ["events-server:9081"]
+    metrics_path: "/api/metrics"
+
   - job_name: "cadvisor"
 
     # Override the global default and scrape targets from this job every 5 seconds.
